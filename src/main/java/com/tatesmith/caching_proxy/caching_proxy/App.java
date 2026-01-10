@@ -29,8 +29,12 @@ public class App {
 	    	server.setPort(port);
 	    	server.setOrigin(origin);
 	    	
-	    	//TODO run the actual server proxy
-	    	
+	    	//run the actual server proxy
+	    	try {
+				server.start();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
 	    	
     	}
     	else {
