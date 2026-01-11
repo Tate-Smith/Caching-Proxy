@@ -5,9 +5,9 @@ public class App {
     	// intalize a proxy server object
     	ProxyServer server = new ProxyServer();
     	// check if its clearing th eproxy or instantiating one
-    	if (args.length == 2) {
+    	if (args.length == 1) {
     		// clearing the proxy, make sure the format is correct
-    		if (!args[0].equals("caching-proxy") || !args[1].equals("--clear-cache")) {
+    		if (!args[0].equals("--clear-cache")) {
     			System.out.println("Invalid Input, format: caching-proxy --clear-cache");
     			System.exit(1);
     		}
@@ -15,15 +15,19 @@ public class App {
     		// clear the cache
     		server.clear();
     	}
-    	else if (args.length == 5) {
+    	else if (args.length == 4) {
 	        // get the port number and server from the user
 	    	// format: caching-proxy --port <number> --origin <url>
-    		if (!args[0].equals("caching-proxy") || !args[2].equals("--port") || !args[4].equals("--origin")) {
+    		if (!args[0].equals("--port") || !args[2].equals("--origin")) {
     			System.out.println("Invalid Input, format: caching-proxy --port <number> --origin <url>");
     			System.exit(1);
     		}
-	    	int port = Integer.valueOf(args[2]);
-	    	String origin = args[4];
+	    	int port = Integer.valueOf(args[1]);
+	    	String origin = args[3];
+	    	
+	    	// remove the http off the front of origin
+	    	if (origin.startsWith("http://")) origin = origin.substring(7);
+	    	else if (origin.startsWith("https://")) origin = origin.substring(8);
 	    	
 	    	// set the port and origin of the server
 	    	server.setPort(port);
