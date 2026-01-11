@@ -1,10 +1,16 @@
+/*
+ * The main function that takes in the command line input and creates the server proxy
+ */
+
 package com.tatesmith.caching_proxy.caching_proxy;
 
-public class App {
-    public static void main(String[] args) {
+import java.io.IOException;
+
+public class CachingProxy {
+    public static void main(String[] args) throws IOException {
     	// intalize a proxy server object
     	ProxyServer server = new ProxyServer();
-    	// check if its clearing th eproxy or instantiating one
+    	// check if its clearing the proxy or instantiating one
     	if (args.length == 1) {
     		// clearing the proxy, make sure the format is correct
     		if (!args[0].equals("--clear-cache")) {
@@ -26,8 +32,14 @@ public class App {
 	    	String origin = args[3];
 	    	
 	    	// remove the http off the front of origin
-	    	if (origin.startsWith("http://")) origin = origin.substring(7);
-	    	else if (origin.startsWith("https://")) origin = origin.substring(8);
+	    	if (origin.startsWith("http://")) {
+	    		origin = origin.substring(7);
+	    		server.setOriginPort(false);
+	    	}
+	    	else if (origin.startsWith("https://")) {
+	    		origin = origin.substring(8);
+	    		server.setOriginPort(true);
+	    	}
 	    	
 	    	// set the port and origin of the server
 	    	server.setPort(port);
